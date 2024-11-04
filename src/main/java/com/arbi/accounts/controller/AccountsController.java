@@ -44,8 +44,6 @@ public class AccountsController {
 
     @PutMapping("/update")
     public ResponseEntity<ResponseDto> updateAccountDetails(@Valid
-                                                            @Pattern(regexp = "(^$|[0-9]{10})",
-                                                                     message = "Mobile Number must be 10 digits.")
                                                             @RequestBody CustomerDto customerDto) {
         boolean isUpdated = iAccountsService.updateAccount(customerDto);
 
@@ -65,7 +63,10 @@ public class AccountsController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<ResponseDto> deleteAccountDetails(@RequestParam String mobileNumber) {
+    public ResponseEntity<ResponseDto> deleteAccountDetails(@RequestParam
+                                                            @Pattern(regexp = "(^$|[0-9]{10})",
+                                                                     message = "Mobile Number must be 10 digits.")
+                                                            String mobileNumber) {
         boolean isDeleted = iAccountsService.deleteAccount(mobileNumber);
 
         if (isDeleted) {
